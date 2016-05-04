@@ -18,7 +18,7 @@
 
       $this->getServer()->getLogger()->info("Enabled.");
 
-      $this->cfg = new Config($this->getDataFolder() . "config.yml", Config::YAML, array("ban_after_deaths" => 5));
+      $this->cfg = new Config($this->getDataFolder() . "config.yml", Config::YAML, array("ban_after_deaths" => 5, "ban_message" => "You have died too many times!"));
 
     }
 
@@ -36,6 +36,10 @@
 
       $player_name = $player->getName();
 
+      $ban_after_deaths = $this->cfg->get("ban_after_deaths");
+
+      $ban_message = $this->cfg->get("ban_message");
+
       if(!(file_exists($this->getDataFolder() . $player_name . ".txt")))
       {
 
@@ -48,6 +52,21 @@
       {
 
         $deaths = file_get_contents($this->getDataFolder() . $player_name . ".txt");
+
+        if($deaths >= $ban_after_deaths)
+        {
+
+          $player->kick($ban_message, false);
+
+          $this->getServer()->getNameBans()->addBan($player_name, "Died too many times.", null, "DeathBan");
+
+        }
+        else
+        {
+
+          file_put_contents($this->getDataFolder() . $player_name . ".txt", $deaths + 1);
+
+        }
 
       }
 
