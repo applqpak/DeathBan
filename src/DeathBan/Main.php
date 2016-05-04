@@ -20,6 +20,8 @@
 
       $this->cfg = new Config($this->getDataFolder() . "config.yml", Config::YAML, array("ban_after_deaths" => 5, "ban_message" => "You have died too many times!"));
 
+      $this->getServer()->getPluginManager()->registerEvents($this, $this);
+
     }
 
     public function onDisable()
