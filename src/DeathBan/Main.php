@@ -47,7 +47,7 @@
 
         touch($this->getDataFolder() . ".txt");
 
-        file_put_contents($this->getDataFolder() . $player_name . ".txt", 0);
+        file_put_contents($this->getDataFolder() . $player_name . ".txt", 1);
 
       }
       else
