@@ -20,8 +20,6 @@
 
       $this->cfg = new Config($this->getDataFolder() . "config.yml", Config::YAML, array("ban_after_deaths" => 5));
 
-      $this->bans = new Config($this->getDataFolder() . "bans.yml", Config::YAML, array());
-
     }
 
     public function onDisable()
@@ -33,6 +31,25 @@
 
     public function onPlayerDeath(PlayerDeathEvent $event)
     {
+
+      $player = $event->getPlayer();
+
+      $player_name = $player->getName();
+
+      if(!(file_exists($this->getDataFolder() . $player_name . ".txt")))
+      {
+
+        touch($this->getDataFolder() . ".txt");
+
+        file_put_contents($this->getDataFolder() . $player_name . ".txt", 0);
+
+      }
+      else
+      {
+
+        $deaths = file_get_contents($this->getDataFolder() . $player_name . ".txt");
+
+      }
 
     }
 
